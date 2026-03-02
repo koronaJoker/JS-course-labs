@@ -17,3 +17,16 @@ for (let i = 1; i <= 5; i++) {
     console.log(`Итерация: ${i}`);
 
 }
+
+/**
+ * сложение двух чисел
+ * @param {number} a - nbgybv
+ * @param {number} b
+ * @returns {number} a+b
+ * @description Сложение двух чисел
+ */
+function sum (a, b) {
+    return a + b;
+}
+
+sum(1,2)
