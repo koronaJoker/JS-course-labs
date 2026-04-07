@@ -30,7 +30,7 @@ const printArray1 = (arr) => {
  *
  * @param {Array<*>} arr
  * @param {function} callback - fun(element, index, array)
- * description calls callback for each element of array
+ * @description calls callback for each element of array
  */
 const forEach = (arr, callback) => {
     for (let i = 0; i < arr.length; i++)
@@ -44,6 +44,7 @@ const forEach = (arr, callback) => {
 // forEach([1, 2, 3], (element, index, array) => {
 //     console.log(`${index}, Value: ${element}`);
 // });
+
 
 
 /**
