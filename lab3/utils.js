@@ -33,6 +33,8 @@ function calculateTotalAmount(transactions) {
 }
 
 
+
+
 /**
  * 
  * @param {*} transactions 
@@ -232,11 +234,11 @@ function findMostDebitTransactionMonth(transactions) {
     }
 
     let maxCount = monthCounts[0];
-    let maxMonth = 1;
+    let maxMonth = 0;
     for (let i = 1; i < monthCounts.length; i++) {
         if (monthCounts[i] > maxCount) {
             maxCount = monthCounts[i];
-            maxMonth = i + 1;
+            maxMonth = i;
         }
     }
 
@@ -245,7 +247,7 @@ function findMostDebitTransactionMonth(transactions) {
         "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     ];
 
-    return monthNames[maxMonth - 1];
+    return monthNames[maxMonth];
 }
 
 
