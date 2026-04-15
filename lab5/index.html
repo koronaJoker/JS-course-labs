@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ <div class="amount-value">
+    <h1>Общая сумма Транзакций:</h1>
+    <p id="amount">0$</p>
+ </div>
+
+<table>
+    <caption>Транзакции</caption>
+
+    <thead>
+        <tr>
+            <th class="id">ID</th>
+            <th>Сумма</th>
+            <th>Дата и время</th>
+            <th>Категория</th>
+            <th class="description">Описание</th>
+            <th>Удалить</th>
+        </tr>
+    </thead>
+
+    <tbody></tbody>
+</table> 
+
+
+
+ <hr>
+
+ <div id="transactionDetails">
+    
+</div>
+
+ <form>
+    <label>Дата</label>
+    <input type="datetime-local" id="Date" name="Date">
+    <label>Сумма транзакции</label>
+    <input type="text" id = "Amount" name = "Amount" placeholder="Сумма транзакции">
+
+    <label>Категория</label>
+
+        <div class="select">
+            <div id = "Category" class="selected">Выберите категорию</div>
+            <div class="options">
+                <div class="option">Еда</div>
+                <div class="option">Транспорт</div>
+                <div class="option">Развлечение</div>
+                <div class="option">Другое</div>
+            </div>
+        </div>
+
+    <label>Описание</label>
+    <input type="text" id="Description" name="Description" placeholder="Введите описание">
+        
+    <button type="button" id="add" style=" margin-top: 40px;">Добавить транзакцию</button>
+
+ </form>
+<div id="modal-overlay"></div>
+    <div class="modal-window">
+        <div class="modal-content">
+            <span id="closeBtn">&times</span>
+            <h3>УПС</h3>
+            <p class="error-text">Вы ввели неправильно:</p>
+            <ul id = "error-list">
+                <li class = "error">транзакция</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="src/index.js" type="module"></script>
+
+</body>
+</html>
