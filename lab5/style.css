@@ -157,8 +157,8 @@ input, .selected {
   left: 0;
   width: 100%;
 
-  background: rgba(0, 0, 24, 0);
-  border: 1px solid #444;
+  
+
 
   opacity: 0;
   transform: translateY(-10px);
@@ -173,9 +173,10 @@ input, .selected {
 }
 
 .options.active {
+background: var(--background-color);
   opacity: 1;
   transform: translateY(0);
-   background: rgba(0, 0, 24, 1);
+  border: 1px solid var(--primary-color);
   pointer-events: auto;
 }
 
@@ -326,7 +327,7 @@ button:hover {
     top: 50%;
     left: 50%;
 
-    transform: translate(-50%, -60%);
+    transform: translate(-50%, -50%);
     opacity: 0;
     pointer-events: none;
 

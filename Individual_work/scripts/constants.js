@@ -1,0 +1,9 @@
+export const INITIAL_PAGE_COUNT = 5;
+export const MAX_ENTRIES_PER_PAGE = 5;
+export const DEFAULT_CAUSE = "сердечный приступ";
+export const DEFAULT_CAUSE_DEATH_TEXT = "сердечного приступа";
+export const DEFAULT_DURATION_MS = 40 * 1000;
+export const TIMER_TICK_MS = 500;
+export const HEARTBEAT_VOLUME = 0.28;
+export const CLOCK_VOLUME = 0.2;
+export const DEATH_VOLUME = 0.72;

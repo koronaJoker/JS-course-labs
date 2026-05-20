@@ -1,0 +1,924 @@
+@font-face {
+    font-family: deathnnote;
+    src: url("fonts/deathnote_font.ttf");
+}
+
+@font-face {
+    font-family: ofont;
+    src: url("fonts/ofont.ru_TagType.ttf");
+}
+
+:root {
+    --hand-font: deathnnote, ofont, Georgia, serif;
+    --gothic-font: deathnnote, ofont, Georgia, serif;
+    --death-font: deathnnote, ofont, Georgia, serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background:
+        radial-gradient(circle at 50% 15%, rgba(73, 96, 126, 0.26), transparent 28rem),
+        linear-gradient(135deg, #030607, #0d1418 52%, #010203);
+    color: #e8eef2;
+    font-family: var(--hand-font);
+    font-weight: bold;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+        repeating-linear-gradient(115deg, transparent 0 28px, rgba(210, 232, 240, 0.018) 28px 30px),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 22%, rgba(0, 0, 0, 0.24));
+    mix-blend-mode: screen;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(173, 195, 202, 0.72) rgba(3, 8, 10, 0.72);
+}
+
+*::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+    border: 1px solid rgba(201, 226, 238, 0.12);
+    background: rgba(3, 8, 10, 0.72);
+}
+
+*::-webkit-scrollbar-thumb {
+    border: 2px solid rgba(3, 8, 10, 0.72);
+    background: linear-gradient(180deg, #c7dce5, #5e7c89);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #eff8fb, #7fa2af);
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+.book {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: clamp(8px, 2vh, 16px);
+    padding: clamp(10px, 2.4vw, 24px);
+}
+
+.book h1 {
+    margin: 0;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: var(--death-font);
+    font-size: clamp(34px, 6.5vw, 68px);
+    letter-spacing: 6px;
+    text-shadow: 0 0 18px rgba(255, 255, 255, 0.35);
+    animation: titleBreath 4.8s ease-in-out infinite;
+}
+
+.notebook {
+    width: min(1120px, 100%);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: clamp(12px, 2vw, 22px);
+    align-items: stretch;
+}
+
+.notebook > * {
+    min-width: 0;
+}
+
+.sheet,
+.timers_panel,
+.death_modal {
+    border: 1px solid rgba(201, 226, 238, 0.24);
+    background:
+        linear-gradient(90deg, rgba(61, 86, 101, 0.22) 0 3px, transparent 3px),
+        repeating-linear-gradient(0deg, rgba(203, 231, 243, 0.05) 0 1px, transparent 1px 42px),
+        linear-gradient(135deg, #12191c, #080d10);
+    box-shadow: 0 20px 80px rgba(0, 0, 0, 0.65);
+    animation: panelRise 0.65s ease both;
+}
+
+.sheet {
+    position: relative;
+    height: clamp(430px, calc(100vh - 176px), 560px);
+    padding: clamp(22px, 3vw, 34px) clamp(18px, 3.4vw, 42px);
+    overflow: auto;
+    background-position: 0 0, 0 0, 0 0;
+    animation: panelRise 0.65s ease both;
+}
+
+.sheet_turn {
+    animation: sheetTurn 0.42s ease both;
+}
+
+.sheet_rip {
+    overflow: hidden;
+    animation: pageRip 0.62s cubic-bezier(.17,.67,.28,1) both;
+}
+
+.sheet::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: url("images/skull.png") center / 340px auto no-repeat;
+    opacity: 0.055;
+    filter: grayscale(1);
+}
+
+.sheet::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    background:
+        linear-gradient(100deg, transparent 0 48%, rgba(220, 240, 246, 0.8) 49%, transparent 50%),
+        repeating-linear-gradient(100deg, transparent 0 14px, rgba(220, 240, 246, 0.18) 14px 17px);
+}
+
+.sheet_rip::after {
+    animation: tearLine 0.62s ease both;
+}
+
+.write_view,
+.rules {
+    position: relative;
+    z-index: 1;
+}
+
+.death_form {
+    display: grid;
+    grid-template-columns: 1.1fr 1.2fr 0.8fr auto;
+    gap: 10px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.death_form input {
+    min-width: 0;
+    height: 44px;
+    padding: 8px 12px;
+    border: 1px solid rgba(201, 226, 238, 0.24);
+    outline: none;
+    background: rgba(0, 0, 0, 0.38);
+    color: #fff;
+    font-family: var(--hand-font);
+    font-size: 18px;
+    letter-spacing: 0;
+    transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s, background 0.25s;
+}
+
+.death_form input:focus {
+    border-color: rgba(211, 239, 249, 0.72);
+    box-shadow: 0 0 16px rgba(151, 204, 225, 0.18);
+    transform: translateY(-1px);
+    background: rgba(8, 18, 23, 0.68);
+}
+
+.death_form button,
+.death_modal button {
+    height: 44px;
+    padding: 0 18px;
+    border: 1px solid rgba(211, 239, 249, 0.44);
+    background: #d6e4e9;
+    color: #071014;
+    font-family: var(--gothic-font);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.death_form button:hover,
+.death_modal button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 18px rgba(151, 204, 225, 0.3);
+}
+
+.death_form button:active,
+.death_modal button:active {
+    transform: translateY(1px) scale(0.98);
+}
+
+.entries_list {
+    display: grid;
+    gap: 8px;
+    margin: 16px 0 0;
+    padding: 0;
+    counter-reset: death-entry;
+}
+
+.entry {
+    display: grid;
+    grid-template-columns: 38px minmax(0, 1fr) auto;
+    gap: 12px;
+    align-items: start;
+    min-height: 50px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    list-style: none;
+    transform-origin: left center;
+}
+
+.entry > div {
+    min-width: 0;
+}
+
+.entry_done {
+    grid-template-columns: 38px minmax(0, 1fr) auto 38px;
+}
+
+.entry::before {
+    counter-increment: death-entry;
+    content: counter(death-entry, decimal-leading-zero);
+    color: #7f9baa;
+    font-family: var(--gothic-font);
+    letter-spacing: 1px;
+}
+
+.entry_name {
+    display: block;
+    font-family: var(--hand-font);
+    font-size: clamp(22px, 2.6vw, 28px);
+    line-height: 1;
+    color: #fff;
+    word-break: break-word;
+}
+
+.entry_new .entry_name,
+.entry_new .entry_cause,
+.entry_new .entry_time {
+    animation: inkWrite 0.72s steps(12, end) both;
+}
+
+.entry_cause,
+.entry_time,
+.page_hint,
+.timer_cause,
+.timer_time {
+    color: #adc3ca;
+    letter-spacing: 1px;
+    overflow-wrap: anywhere;
+}
+
+.entry_cause {
+    display: block;
+    margin-top: 6px;
+    font-size: clamp(15px, 1.8vw, 18px);
+}
+
+.entry_time {
+    white-space: nowrap;
+    font-family: var(--gothic-font);
+    font-size: clamp(13px, 1.4vw, 15px);
+}
+
+.page_hint {
+    margin: 22px 0 0;
+    text-align: center;
+}
+
+.entry_done .entry_name {
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+    text-decoration-color: #c7dce5;
+    animation: nameStrike 0.55s ease both;
+}
+
+.entry_done::after {
+    content: "X";
+    grid-column: 4;
+    grid-row: 1;
+    justify-self: end;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border: 2px solid #c7dce5;
+    color: #c7dce5;
+    font-size: 24px;
+    line-height: 1;
+    text-shadow: 0 0 12px rgba(199, 220, 229, 0.5);
+    animation: deathStamp 0.5s cubic-bezier(.17,.67,.24,1.35) both;
+}
+
+.entry_done {
+    opacity: 0.56;
+}
+
+.entry_marked {
+    animation: deathShade 0.7s ease both;
+}
+
+.timers_panel {
+    height: clamp(430px, calc(100vh - 176px), 560px);
+    padding: clamp(16px, 2vw, 24px);
+    overflow: auto;
+}
+
+.timers_header {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.timers_panel h2 {
+    margin: 0;
+    text-align: center;
+    font-family: var(--gothic-font);
+    font-size: clamp(25px, 3vw, 32px);
+    letter-spacing: 2px;
+}
+
+.timer_sort_label {
+    color: #adc3ca;
+    font-size: 15px;
+    letter-spacing: 1px;
+}
+
+.timer_sort_select {
+    width: 100%;
+    height: 38px;
+    padding: 6px 10px;
+    border: 1px solid rgba(201, 226, 238, 0.24);
+    outline: none;
+    background: rgba(0, 0, 0, 0.38);
+    color: #fff;
+    cursor: pointer;
+}
+
+.timer_sort_select:focus {
+    border-color: rgba(211, 239, 249, 0.72);
+    box-shadow: 0 0 16px rgba(151, 204, 225, 0.18);
+}
+
+.timer_sort_select option {
+    background: #080d10;
+    color: #fff;
+}
+
+.timers_list {
+    display: grid;
+    gap: 12px;
+}
+
+.timer_card {
+    padding: 12px;
+    border: 1px solid rgba(201, 226, 238, 0.18);
+    background: rgba(0, 0, 0, 0.32);
+    overflow: hidden;
+    transform-origin: center;
+    transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s, opacity 0.25s;
+}
+
+.timer_card:hover {
+    border-color: rgba(211, 239, 249, 0.38);
+    box-shadow: 0 0 24px rgba(113, 169, 190, 0.13);
+    transform: translateY(-2px);
+}
+
+.timer_new {
+    animation: timerSummon 0.55s ease both;
+}
+
+.timer_name {
+    margin: 0;
+    padding-right: 34px;
+    font-family: var(--hand-font);
+    font-size: clamp(20px, 2.4vw, 24px);
+    color: #fff;
+    word-break: break-word;
+}
+
+.timer_cause,
+.timer_time {
+    margin: 6px 0 0;
+    font-size: 16px;
+}
+
+.timer_time {
+    font-family: var(--gothic-font);
+    font-size: clamp(28px, 3.2vw, 38px);
+    font-variant-numeric: tabular-nums;
+    color: #d6e4e9;
+    text-shadow: 0 0 14px rgba(160, 213, 233, 0.25);
+    animation: timerPulse 1s ease-in-out infinite;
+}
+
+.timer_done {
+    position: relative;
+    opacity: 0.55;
+}
+
+.timer_done .timer_time {
+    animation: none;
+    transform: none;
+    color: #9caeb5;
+    text-shadow: none;
+}
+
+.timer_done::after {
+    content: "X";
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border: 2px solid #c7dce5;
+    color: #c7dce5;
+    font-size: 21px;
+    line-height: 1;
+    animation: deathStamp 0.5s cubic-bezier(.17,.67,.24,1.35) both;
+}
+
+.timer_death_flash {
+    animation: deathFlash 0.9s ease both;
+}
+
+.rules h2 {
+    margin: 0 0 8px;
+    text-align: center;
+    font-family: var(--gothic-font);
+    font-size: 32px;
+}
+
+.rules ul {
+    width: min(560px, 100%);
+    margin: 0 auto 22px;
+    padding: 0;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+.rules li {
+    position: relative;
+    margin: 12px 0;
+    list-style: none;
+    font-size: clamp(15px, 1.8vw, 18px);
+    animation: ruleFade 0.45s ease both;
+}
+
+.rules li::before {
+    content: "*";
+    position: absolute;
+    left: -16px;
+    top: 0;
+    color: #89a7b3;
+}
+
+.page_pagination {
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+}
+
+.page_pagination ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+}
+
+.page_pagination li {
+    min-width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    padding: 0 8px;
+    font-family: var(--gothic-font);
+    font-size: 18px;
+    list-style: none;
+    cursor: pointer;
+    transition: transform 0.2s, text-shadow 0.2s, color 0.2s;
+}
+
+.page_pagination li:hover {
+    transform: scale(1.16);
+    text-shadow: 0 0 18px #fff;
+}
+
+.tear_page_button {
+    min-height: 34px;
+    padding: 6px 18px;
+    border: 1px solid rgba(211, 239, 249, 0.34);
+    background: rgba(4, 11, 14, 0.62);
+    color: #d6e4e9;
+    font-family: var(--gothic-font);
+    font-size: 18px;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s, opacity 0.2s;
+}
+
+.tear_page_button:hover:not(:disabled) {
+    transform: translateY(-1px) skewX(-2deg);
+    border-color: rgba(211, 239, 249, 0.7);
+    box-shadow: 0 0 20px rgba(151, 204, 225, 0.22);
+}
+
+.tear_page_button:disabled {
+    cursor: default;
+    opacity: 0.45;
+}
+
+.active {
+    transform: scale(1.18);
+    text-shadow: 0 0 15px #fff;
+    animation: activePulse 1.8s ease-in-out infinite;
+}
+
+.hidden {
+    display: none;
+}
+
+.death_modal {
+    width: min(440px, calc(100% - 32px));
+    padding: 28px;
+    color: #fff;
+}
+
+.death_modal[open] {
+    animation: modalWake 0.34s ease both;
+}
+
+.death_modal::backdrop {
+    background: rgba(0, 0, 0, 0.78);
+    animation: backdropWake 0.34s ease both;
+}
+
+.death_modal p {
+    margin: 0 0 20px;
+    font-family: var(--hand-font);
+    font-size: clamp(22px, 4vw, 30px);
+    line-height: 1.25;
+    text-align: center;
+}
+
+.error_modal h2 {
+    margin: 0 0 14px;
+    text-align: center;
+    font-family: var(--gothic-font);
+    font-size: clamp(24px, 4vw, 32px);
+    letter-spacing: 1px;
+}
+
+.error_modal ul {
+    display: grid;
+    gap: 10px;
+    margin: 0 0 20px;
+    padding-left: 22px;
+    color: #d6e4e9;
+    font-size: 20px;
+}
+
+.error_modal li {
+    padding-left: 4px;
+}
+
+@keyframes titleBreath {
+    0%, 100% {
+        text-shadow: 0 0 16px rgba(220, 238, 246, 0.28);
+        filter: brightness(0.96);
+    }
+
+    50% {
+        text-shadow: 0 0 28px rgba(220, 238, 246, 0.52);
+        filter: brightness(1.12);
+    }
+}
+
+@keyframes panelRise {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.985);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes sheetTurn {
+    0% {
+        opacity: 0.2;
+        transform: perspective(900px) rotateY(-7deg) translateX(-12px);
+        filter: blur(1px);
+    }
+
+    65% {
+        opacity: 1;
+        transform: perspective(900px) rotateY(2deg) translateX(2px);
+        filter: blur(0);
+    }
+
+    100% {
+        transform: perspective(900px) rotateY(0) translateX(0);
+    }
+}
+
+@keyframes pageRip {
+    0% {
+        opacity: 1;
+        transform: rotate(0) translateX(0) scale(1);
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        filter: brightness(1);
+    }
+
+    32% {
+        transform: rotate(-1.5deg) translateX(-6px) scale(1.01);
+        clip-path: polygon(0 0, 48% 0, 53% 14%, 47% 28%, 52% 46%, 46% 64%, 51% 82%, 45% 100%, 0 100%);
+        filter: brightness(1.18);
+    }
+
+    100% {
+        opacity: 0;
+        transform: rotate(-8deg) translateX(-120px) translateY(36px) scale(0.84);
+        clip-path: polygon(0 0, 46% 0, 54% 15%, 44% 31%, 53% 49%, 43% 67%, 52% 84%, 41% 100%, 0 100%);
+        filter: blur(1px) brightness(0.7);
+    }
+}
+
+@keyframes tearLine {
+    0% {
+        opacity: 0;
+        transform: translateX(36px);
+    }
+
+    25% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(-120px);
+    }
+}
+
+@keyframes inkWrite {
+    from {
+        clip-path: inset(0 100% 0 0);
+        opacity: 0.2;
+        filter: blur(1px);
+    }
+
+    to {
+        clip-path: inset(0 0 0 0);
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+@keyframes nameStrike {
+    0% {
+        text-decoration-color: transparent;
+        filter: brightness(1.4);
+    }
+
+    100% {
+        text-decoration-color: #c7dce5;
+        filter: brightness(0.72);
+    }
+}
+
+@keyframes deathStamp {
+    0% {
+        opacity: 0;
+        transform: scale(2.2) rotate(-18deg);
+        filter: blur(2px);
+    }
+
+    60% {
+        opacity: 1;
+        transform: scale(0.82) rotate(5deg);
+        filter: blur(0);
+    }
+
+    100% {
+        transform: scale(1) rotate(0);
+    }
+}
+
+@keyframes deathShade {
+    0% {
+        background: rgba(205, 232, 242, 0.15);
+        box-shadow: inset 0 0 26px rgba(205, 232, 242, 0.14);
+    }
+
+    100% {
+        background: transparent;
+        box-shadow: none;
+    }
+}
+
+@keyframes timerSummon {
+    from {
+        opacity: 0;
+        transform: translateX(16px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes timerPulse {
+    0%, 100% {
+        transform: translateY(0);
+        text-shadow: 0 0 10px rgba(160, 213, 233, 0.2);
+    }
+
+    50% {
+        transform: translateY(-1px);
+        text-shadow: 0 0 20px rgba(160, 213, 233, 0.44);
+    }
+}
+
+@keyframes deathFlash {
+    0% {
+        border-color: rgba(235, 248, 252, 0.72);
+        box-shadow: 0 0 34px rgba(205, 232, 242, 0.28);
+    }
+
+    100% {
+        border-color: rgba(201, 226, 238, 0.18);
+        box-shadow: none;
+    }
+}
+
+@keyframes ruleFade {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes activePulse {
+    0%, 100% {
+        text-shadow: 0 0 12px rgba(255, 255, 255, 0.62);
+    }
+
+    50% {
+        text-shadow: 0 0 24px rgba(205, 232, 242, 0.9);
+    }
+}
+
+@keyframes modalWake {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.94);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes backdropWake {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 820px) {
+    .book {
+        min-height: 100dvh;
+        justify-content: flex-start;
+        padding: 12px;
+    }
+
+    .notebook {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .sheet,
+    .timers_panel {
+        height: auto;
+        min-height: 0;
+        padding: 18px 14px;
+    }
+
+    .sheet {
+        max-height: none;
+    }
+
+    .timers_panel {
+        max-height: 32dvh;
+    }
+
+    .death_form {
+        grid-template-columns: 1fr;
+    }
+
+    .entry {
+        grid-template-columns: 30px minmax(0, 1fr) 34px;
+        gap: 8px;
+    }
+
+    .entry_done {
+        grid-template-columns: 30px minmax(0, 1fr) 34px;
+    }
+
+    .entry_time {
+        grid-column: 2 / -1;
+        grid-row: 2;
+        white-space: normal;
+    }
+
+    .entry_done::after {
+        grid-column: 3;
+        grid-row: 1;
+        width: 30px;
+        height: 30px;
+    }
+
+    .timers_list {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+
+    .timer_time {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 460px) {
+    .book h1 {
+        font-size: 34px;
+        letter-spacing: 4px;
+    }
+
+    .death_form input,
+    .death_form button {
+        height: 40px;
+        font-size: 16px;
+    }
+
+    .entry {
+        grid-template-columns: 26px minmax(0, 1fr);
+    }
+
+    .entry_done {
+        grid-template-columns: 26px minmax(0, 1fr);
+    }
+
+    .entry_done::after {
+        grid-column: 2;
+        grid-row: 3;
+        justify-self: start;
+    }
+
+    .page_pagination ul {
+        gap: 8px;
+    }
+
+    .page_pagination li {
+        min-width: 26px;
+        height: 28px;
+        font-size: 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}

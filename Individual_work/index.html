@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Death Note</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="book">
+        <h1>Death Note</h1>
+        <div class="notebook">
+            <main class="sheet">
+                <section id="write_view" class="write_view">
+                    <form id="death_form" class="death_form" autocomplete="off" novalidate>
+                        <input id="name_input" type="text" placeholder="Имя человека" required>
+                        <input id="cause_input" type="text" placeholder="Причина, по умолчанию: сердечный приступ">
+                        <input id="time_input" type="text" placeholder="Время: 40s, 2m, 01:30, в 23:15">
+                        <button type="submit">Записать</button>
+                    </form>
+                    <ol id="entries_list" class="entries_list"></ol>
+                    <p id="page_hint" class="page_hint"></p>
+                </section>
+                <section id="rules_view" class="rules hidden">
+                    <h2 class="section-title">I</h2>
+                    <ul>
+                        <li>The human whose name is written in this note shall die.</li>
+                        <li>This note will not take effect unless the writer has the person's face in mind.</li>
+                        <li>If the cause of death is written within 40 seconds, it will happen.</li>
+                        <li>If the cause is not specified, the person will die of a heart attack.</li>
+                        <li>After writing the cause, details should be written in the next 6 minutes and 40 seconds.</li>
+                    </ul>
+                    <h2 class="section-title">II</h2>
+                    <ul>
+                        <li>This note becomes the property of the human world once it arrives there.</li>
+                        <li>The owner can recognize the image and voice of its original owner.</li>
+                        <li>The human who uses this note can neither go to Heaven nor Hell.</li>
+                    </ul>
+                </section>
+            </main>
+            <aside class="timers_panel">
+                <div class="timers_header">
+                    <h2>Таймеры</h2>
+                    <label class="timer_sort_label" for="timer_sort_select">Сортировка</label>
+                    <select id="timer_sort_select" class="timer_sort_select">
+                        <option value="created">По добавлению</option>
+                        <option value="deadline-asc">По возрастанию</option>
+                        <option value="deadline-desc">По убыванию</option>
+                        <option value="name-asc">Имя А-Я</option>
+                        <option value="name-desc">Имя Я-А</option>
+                        <option value="active-first">По активности</option>
+                    </select>
+                </div>
+                <div id="timers_list" class="timers_list"></div>
+            </aside>
+        </div>
+        <nav class="page_pagination" aria-label="Pages">
+            <ul id="pagination"></ul>
+            <button id="tear_page_button" class="tear_page_button" type="button">Оторвать лист</button>
+        </nav>
+    </div>
+    <dialog id="death_modal" class="death_modal">
+        <p id="death_message"></p>
+        <button id="close_modal" type="button">Закрыть</button>
+    </dialog>
+    <dialog id="error_modal" class="death_modal error_modal">
+        <h2>Ошибка ввода</h2>
+        <ul id="error_list"></ul>
+        <button id="close_error_modal" type="button">Закрыть</button>
+    </dialog>
+    <script type="module" src="scripts/index.js"></script>
+</body>
+</html>

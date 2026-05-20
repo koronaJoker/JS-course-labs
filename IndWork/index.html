@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Pinterest 2.0</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Пинтерест 2.0</h1>
+
+<div class="panel">
+    <button class="add" id="add">+</button>
+
+    <input type="file" id="img" accept="image/*,video/*" multiple>
+
+    <input type="text" id="title" placeholder="Название">
+
+    <input type="text" id="folder" placeholder="Папка">
+
+    <select id="filter">
+        <option value="none">Без фильтра</option>
+        <option value="grayscale">Ч/Б</option>
+        <option value="blur">Размытие</option>
+        <option value="contrast">Контраст</option>
+    </select>
+
+    <select id="sort">
+        <option value="new">Сначала новые</option>
+        <option value="old">Сначала старые</option>
+        <option value="name">По имени</option>
+    </select>
+</div>
+
+<div id="image-load"></div>
+
+<script src="index.js"></script>
+</body>
+</html>
